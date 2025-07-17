@@ -1,20 +1,58 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <title>Random Drankopdracht Generator</title>
+    <meta charset="UTF-8">
+    <title>Sunny Beach 2K25</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body style="font-family: Arial; text-align: center; margin-top: 50px;">
-    <h1>🍻 Random Drankopdracht voor Sunny Beach 🍻</h1>
-    <h2 id="opdracht" style="margin-top:30px; color:darkred;"></h2>
-    <button onclick="genereerOpdracht()" style="font-size:20px; padding:10px; margin-top:20px;">Nieuwe opdracht</button>
+<body>
+    <header>Sunny Beach 2K25</header>
+    <div class="card">
+        <img id="challengeImage" src="" alt="Challenge Image">
+        <h2 id="challengeTitle">Titel komt hier</h2>
+        <p id="challengeText">Opdracht komt hier</p>
+    </div>
+    <button onclick="nieuweOpdracht()">Nieuwe opdracht</button>
+
     <script>
-        const opdrachten = ['Neem een shot zonder handen.', 'Drink met een rietje uit een biertje van iemand anders.', 'Ruil je drankje met iemand buiten je groep.', 'Bestel een drankje zonder te praten (gebaren gebruiken).', 'Probeer een shot te krijgen van een onbekende.', 'Doe een bierrace met iemand uit de groep – verliezer drinkt nog één.', "Zeg 'Proost' in 5 verschillende talen, dan pas mag je drinken.", 'Kies een willekeurig drankje van het menu – dat moet je nemen.', 'Drink met je ogen dicht terwijl iemand je drankje vasthoudt.', 'Je mag pas drinken als je een mop vertelt waar minimaal 2 mensen om lachen.', 'Bedenk een nieuw shot-recept, laat het maken, en drink het zelf op.', 'Doe een adje-pilsje met iemand die je nog niet kent.', 'Zet een timer op 2 minuten: wie dan het minst heeft gedronken, moet extra shot nemen.', 'Laat een andere groep jouw shot kiezen.', 'Doe een dansje op tafel of bar voordat je mag drinken.', 'Je volgende drankje moet gedronken worden met een gek stemmetje.', 'Iedereen in de groep stemt wie er het nuchterst is – diegene moet twee shots nemen.', 'Bestel een drankje en laat het bezorgen aan een onbekende (als verrassing).', 'Maak een groepsproost met minstens 3 mensen die je niet kent.', 'Neem een shot als iemand het woord ‘zuipen’ zegt (vanaf nu!).', 'Fluister een toast in iemands oor vóór je drinkt.', 'Gebruik een raar voorwerp als glas voor je volgende drankje.', 'Zeg ‘ik ben beroemd in Nederland’ voordat je bestelt.', 'Spreek een vreemde aan met ‘Jij ziet eruit alsof jij wel weet wat lekker is… kies mijn shot!’', 'Drink een slok voor elke keer dat iemand ‘bier’ zegt in de volgende 10 minuten.', 'Ruil 1 kledingstuk voor een shot (met toestemming uiteraard).'];
-        function genereerOpdracht() {
-            const opdracht = opdrachten[Math.floor(Math.random() * opdrachten.length)];
-            document.getElementById("opdracht").innerText = opdracht;
+        const opdrachten = [
+            {{
+                title: "Shot zonder handen",
+                text: "Neem een shot zonder je handen te gebruiken.",
+                image: "https://images.unsplash.com/photo-1603574670812-d24560880210"
+            }},
+            {{
+                title: "Shot van vreemde",
+                text: "Probeer een shot te krijgen van een vreemde.",
+                image: "https://images.unsplash.com/photo-1573497491208-6b1acb260507"
+            }},
+            {{
+                title: "Dans-drink duel",
+                text: "Doe een dansje in ruil voor een drankje van een ander.",
+                image: "https://images.unsplash.com/photo-1604882353749-488e3b994c29"
+            }},
+            {{
+                title: "Proost-marathon",
+                text: "Zeg 'Proost' in 5 talen voor je volgende slok.",
+                image: "https://images.unsplash.com/photo-1532635247-0e84b7c68f1d"
+            }},
+            {{
+                title: "Cocktailroulette",
+                text: "Laat een ander een willekeurige cocktail voor je kiezen.",
+                image: "https://images.unsplash.com/photo-1564758561126-258cddf2537b"
+            }}
+        ];
+
+        function nieuweOpdracht() {
+            const gekozen = opdrachten[Math.floor(Math.random() * opdrachten.length)];
+            document.getElementById("challengeTitle").innerText = gekozen.title;
+            document.getElementById("challengeText").innerText = gekozen.text;
+            document.getElementById("challengeImage").src = gekozen.image + "?w=800";
         }
-        window.onload = genereerOpdracht;
+
+        window.onload = nieuweOpdracht;
     </script>
 </body>
 </html>
