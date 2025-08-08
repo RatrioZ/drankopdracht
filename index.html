@@ -1,32 +1,109 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Sunny Beach 2K25</title>
+  <title>Indrinken musjee</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>Sunny Beach 2K25</header>
+  <header>Indrinken musjee</header>
+
   <div style="margin: 20px;">
     <label>
       <input type="checkbox" id="modeToggle" onchange="nieuweOpdracht()" />
-      <strong>Hardcore modus</strong>
+      <strong>Extreem dronken</strong>
     </label>
   </div>
+
   <div class="card">
     <h2 id="challengeTitle" style="font-size: 24px;">Titel komt hier</h2>
     <p id="challengeText">Opdracht komt hier</p>
   </div>
+
   <div style="margin-bottom: 40px;">
     <button onclick="nieuweOpdracht()">Nieuwe opdracht</button>
-    <button onclick="toonPenalty()">Ik durf niet 😈</button>
+    <button onclick="toonDrankspel()">Drankspel</button>
   </div>
 
   <script>
-    const easyOpdrachten = [{"title": "Toost Tijd", "text": "Zeg 'Proost' in 3 talen en neem een shotje of atje mix."}, {"title": "Dans Break", "text": "Dans 30 seconden in het openbaar. Daarna verdien je je drankje."}, {"title": "Selfie Challenge", "text": "Maak een selfie met een onbekende en drink er een op."}, {"title": "Vraag maar raak", "text": "Laat iemand jouw drankje kiezen: shotje of atje mix."}, {"title": "Snel Slokje", "text": "Ad een slok (of shot) binnen 5 seconden."}, {"title": "Flirt & Drink", "text": "Flirt met iemand en drink samen."}, {"title": "Wisseltruc", "text": "Wissel je drankje met iemand uit de groep."}, {"title": "Groepsproost", "text": "Proost met minstens 3 mensen tegelijk."}, {"title": "Dronken Dialoog", "text": "Praat 1 minuut met een vreemde over je drankvoorkeur en neem daarna een shot."}, {"title": "Zonder Handen", "text": "Neem een shotje zonder je handen te gebruiken."}];
-    const hardcoreOpdrachten = [{"title": "Dubbel Shot", "text": "Twee verschillende shots achter elkaar \u2013 geen excuses."}, {"title": "Bier Ad-challenge", "text": "Ad in \u00e9\u00e9n keer een halve liter mix of bier."}, {"title": "Roulatie Roulette", "text": "Iedereen kiest een drankje voor je. Kies er 1 en drink hem in \u00e9\u00e9n teug."}, {"title": "Dansvloer Dare", "text": "Doe een gek dansje midden op de dansvloer, sluit af met shotje."}, {"title": "Shot in Stilte", "text": "Zeg 2 minuten niets \u2013 lukt het? Dan mag je kiezen. Faalt? Dan beide."}, {"title": "Versier & Zuip", "text": "Spreek iemand aan, scoor een naam, en neem daarna een dubbele shot."}, {"title": "Kleding Ruil", "text": "Ruil een kledingstuk met een vreemde en drink daarna 2x."}, {"title": "Blind Mix", "text": "Mix 3 drankjes en drink het zonder te ruiken of vragen."}, {"title": "Publiek Shot", "text": "Neem een shot midden in het publiek met minstens 3 kijkers."}, {"title": "Nek Adder", "text": "Laat iemand anders het drankje in je mond gieten \u2013 jij moet het atten."}];
+    // --- PUUR DRANK: Easy ---
+    const easyOpdrachten = [
+      { title: "Atje Licht", text: "Atje van 1/3 glas bier of mixdrank." },
+      { title: "Dubbel Slok", text: "Neem 2 grote slokken uit je huidige drankje." },
+      { title: "Shotje Keuze", text: "Kies een shotje (of laat iemand kiezen) en tik ‘m weg." },
+      { title: "5-Sec Atje", text: "Tel tot 5 en drink zolang door als je kunt." },
+      { title: "Halfje At", text: "Drink een halve mix in één teug." },
+      { title: "Langzaam Lekker", text: "3 trage slokken achter elkaar, geen pauze." },
+      { title: "Waterfall Mini", text: "Start een mini-waterfall van 4 tellen met de groep." },
+      { title: "Switch & Sip", text: "Ruil drankje met iemand en neem direct 2 slokken." },
+      { title: "Shot + Slok", text: "Eerst een shotje, dan meteen 1 grote slok van je drankje." },
+      { title: "Bubbel Break", text: "Open nieuw drankje en neem er 3 slokken van." }
+    ];
+
+    // --- PUUR DRANK: Hardcore ---
+    const hardcoreOpdrachten = [
+      { title: "Atje Vol", text: "At in één keer je hele glas (bier of mix)." },
+      { title: "Back-to-Back", text: "Neem 2 verschillende shotjes achter elkaar." },
+      { title: "Dubbel At", text: "Vul je glas half en at het; herhaal direct nog eens." },
+      { title: "10-Tell At", text: "Iemand telt tot 10 terwijl jij doorslurpt." },
+      { title: "Shot-Trio", text: "3 shotjes in 2 minuten. Succes." },
+      { title: "Bierpull Sprint", text: "Ad een groot bierglas zo ver als je komt." },
+      { title: "Mix Monster", text: "Maak een sterke mix en at tot onder de helft." },
+      { title: "Waterval Pro", text: "Groepswaterval: jij stopt pas als 2 mensen na jou gestopt zijn." },
+      { title: "Nek At", text: "Iemand houdt je glas/shot vast; jij at zonder stoppen." },
+      { title: "Shot + At", text: "Neem 1 shotje en daarna direct een halve at van je glas." }
+    ];
+
+    // --- Drankspellen (46 van jouw lijst) ---
+    const drankspellen = [
+      { naam: "1tje Gooien", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Aapje Gooien", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Moeilijk" },
+      { naam: "Arrogance", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Bier Und Boobies", categorie: "Dobbelspel", spelers: 6, moeilijkheid: "Makkelijk" },
+      { naam: "Blind Mexicanen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Buffen", categorie: "Kaartspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Buurtje Naaien", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Deelspel", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Derken Extreme", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dice of Death", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbel Je Zat", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbel Shots", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Dobbelatten", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbeldraaien", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbelen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbelen 1 Of 6", categorie: "Dobbelspel", spelers: 6, moeilijkheid: "Makkelijk" },
+      { naam: "Dobbelen II", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Driemannen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Driemannen II", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Enen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Flatgebouw", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Flatgebouw II", categorie: "Overig", spelers: 3, moeilijkheid: "Makkelijk" },
+      { naam: "Fritzen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Harry!", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "He He He Spel", categorie: "Dobbelspel", spelers: 6, moeilijkheid: "Makkelijk" },
+      { naam: "Henken", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Het Kamelen King Doel spel", categorie: "Overig", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Kaputt machen!", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Maten Naaien", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Met Z'n Zessen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Mexxen", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Mexxen II", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Moeilijk" },
+      { naam: "Nu Ben Jij", categorie: "Overig", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Op de markt", categorie: "Kaartspel", spelers: 4, moeilijkheid: "Makkelijk" },
+      { naam: "Pigon", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Pokémon drankspel", categorie: "Bordspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Seven Eleven Double", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "The Drunk Game", categorie: "Bordspel", spelers: 4, moeilijkheid: "Makkelijk" },
+      { naam: "Toren", categorie: "Behendigheid", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Verlepto", categorie: "Kaartspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Voetbalwedstrijd Atten", categorie: "Overig", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Weegschaalspel", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Wippen Drankspel", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Gemiddeld" },
+      { naam: "Zap Drankspel", categorie: "Overig", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Zes Glaasjes", categorie: "Dobbelspel", spelers: 2, moeilijkheid: "Makkelijk" },
+      { naam: "Zesendertigen", categorie: "Dobbelspel", spelers: 4, moeilijkheid: "Makkelijk" }
+    ];
 
     function nieuweOpdracht() {
       const isHardcore = document.getElementById('modeToggle').checked;
@@ -36,18 +113,16 @@
       document.getElementById("challengeText").innerText = gekozen.text;
     }
 
-    function toonPenalty() {
-      const straffen = [
-        "Drink twee shots achter elkaar!",
-        "Laat de groep een mix voor je maken – jij drinkt 'm op.",
-        "Volgende opdracht mag je niet weigeren.",
-        "Jij betaalt het volgende rondje.",
-        "Doe een gênante dans voor de groep voordat je mag drinken.",
-        "Zing luid een liedje in het openbaar!",
-        "Je moet 3 minuten stil blijven terwijl anderen drinken."
-      ];
-      const gekozen = straffen[Math.floor(Math.random() * straffen.length)];
-      alert("Penalty 😈\n" + gekozen);
+    // Vervanger voor de oude penalty-knop
+    function toonDrankspel() {
+      const g = drankspellen[Math.floor(Math.random() * drankspellen.length)];
+      alert(
+        "Drankspel 🎲\n" +
+        g.naam + "\n\n" +
+        "Categorie: " + g.categorie + "\n" +
+        "Min. spelers: " + g.spelers + "\n" +
+        "Moeilijkheid: " + g.moeilijkheid
+      );
     }
 
     window.onload = nieuweOpdracht;
